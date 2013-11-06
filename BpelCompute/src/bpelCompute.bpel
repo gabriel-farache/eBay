@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="bpelCompute"
+    targetNamespace="http://enterprise.netbeans.org/bpel/BpelCompute/bpelCompute"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/BpelCompute/bpelCompute"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace"
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://xml.netbeans.org/schema/BPELComputeXmlSchema">
+    <import namespace="http://enterprise.netbeans.org/bpel/BPELComputeWSDLWrapper" location="BPELComputeWSDLWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" location="BPELComputeWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/CalculatorWebServiceServiceWrapper" location="CalculatorWebServiceServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://ws/" location="WebApplicationWS/wsdl/CalculatorWebServiceService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/DateTimeWSServiceWrapper" location="DateTimeWSServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://datetime/" location="WebApplicationWS1/wsdl/DateTimeWSService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLinkCalculatorWS" xmlns:tns="http://enterprise.netbeans.org/bpel/CalculatorWebServiceServiceWrapper" partnerLinkType="tns:CalculatorWebServiceLinkType" partnerRole="CalculatorWebServiceRole"/>
+        <partnerLink name="PartnerLinkDateTimeWS" xmlns:tns="http://enterprise.netbeans.org/bpel/DateTimeWSServiceWrapper" partnerLinkType="tns:DateTimeWSLinkType" partnerRole="DateTimeWSRole"/>
+        <partnerLink name="PartnerLinkBPEL" xmlns:tns="http://enterprise.netbeans.org/bpel/BPELComputeWSDLWrapper" partnerLinkType="tns:BPELComputeWSDLLinkType" myRole="BPELComputeWSDLRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="DivideOut" xmlns:tns="http://ws/" messageType="tns:divideResponse"/>
+        <variable name="DivideIn" xmlns:tns="http://ws/" messageType="tns:divide"/>
+        <variable name="MultiplyOut" xmlns:tns="http://ws/" messageType="tns:multiplyResponse"/>
+        <variable name="MultiplyIn" xmlns:tns="http://ws/" messageType="tns:multiply"/>
+        <variable name="SubtractOut" xmlns:tns="http://ws/" messageType="tns:subtractResponse"/>
+        <variable name="SubtractIn" xmlns:tns="http://ws/" messageType="tns:subtract"/>
+        <variable name="GetDateTimeOut" xmlns:tns="http://datetime/" messageType="tns:getDateTimeResponse"/>
+        <variable name="GetDateTimeIn" xmlns:tns="http://datetime/" messageType="tns:getDateTime"/>
+        <variable name="AddOut" xmlns:tns="http://ws/" messageType="tns:addResponse"/>
+        <variable name="AddIn" xmlns:tns="http://ws/" messageType="tns:add"/>
+        <variable name="Fault1FaultVar" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" messageType="tns:BPELComputeWSDLOperationFault"/>
+        <variable name="BPELComputeWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" messageType="tns:BPELComputeWSDLOperationResponse"/>
+        <variable name="BPELComputeWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" messageType="tns:BPELComputeWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLinkBPEL" operation="BPELComputeWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" portType="tns:BPELComputeWSDLPortType" variable="BPELComputeWSDLOperationIn"/>
+        <if name="If1">
+            <condition>$BPELComputeWSDLOperationIn.part1/ns0:p3 = '+'</condition>
+            <sequence name="Sequence3">
+                <assign name="Assign1">
+                    <copy>
+                        <from>$BPELComputeWSDLOperationIn.part1/ns0:p1</from>
+                        <to>$AddIn.parameters/p1</to>
+                    </copy>
+                    <copy>
+                        <from>$BPELComputeWSDLOperationIn.part1/ns0:p2</from>
+                        <to>$AddIn.parameters/p2</to>
+                    </copy>
+                </assign>
+                <invoke name="Invoke1" partnerLink="PartnerLinkCalculatorWS" operation="add" xmlns:tns="http://ws/" portType="tns:CalculatorWebService" inputVariable="AddIn" outputVariable="AddOut"/>
+                <assign name="Assign4">
+                    <copy>
+                        <from>concat('Result: ', string($AddOut.parameters/return), ' at ')</from>
+                        <to>$BPELComputeWSDLOperationOut.response/ns0:result</to>
+                    </copy>
+                </assign>
+            </sequence>
+            <else>
+                <sequence name="Sequence1">
+                    <if name="If2">
+                        <condition>$BPELComputeWSDLOperationIn.part1/ns0:p3 = '-'</condition>
+
+                        <sequence name="Sequence5">
+                            <assign name="Assign7">
+                                <copy>
+                                    <from>$BPELComputeWSDLOperationIn.part1/ns0:p1</from>
+                                    <to>$SubtractIn.parameters/p1</to>
+                                </copy>
+                                <copy>
+                                    <from>$BPELComputeWSDLOperationIn.part1/ns0:p2</from>
+                                    <to>$SubtractIn.parameters/p2</to>
+                                </copy>
+                            </assign>
+                            <invoke name="Invoke3" partnerLink="PartnerLinkCalculatorWS" operation="substract" xmlns:tns="http://ws/" portType="tns:CalculatorWebService" inputVariable="SubtractIn" outputVariable="SubtractOut"/>
+                            <assign name="Assign8">
+                                <copy>
+                                    <from>concat('Result: ', string($SubtractOut.parameters/return), ' at ')</from>
+                                    <to>$BPELComputeWSDLOperationOut.response/ns0:result</to>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <else>
+                            <if name="If3">
+                                <condition>$BPELComputeWSDLOperationIn.part1/ns0:p3 = '*'</condition>
+
+                                <sequence name="Sequence6">
+                                    <assign name="Assign9">
+                                        <copy>
+                                            <from>$BPELComputeWSDLOperationIn.part1/ns0:p1</from>
+                                            <to>$MultiplyIn.parameters/p1</to>
+                                        </copy>
+                                        <copy>
+                                            <from>$BPELComputeWSDLOperationIn.part1/ns0:p2</from>
+                                            <to>$MultiplyIn.parameters/p2</to>
+                                        </copy>
+                                    </assign>
+                                    <invoke name="Invoke4" partnerLink="PartnerLinkCalculatorWS" operation="multiply" xmlns:tns="http://ws/" portType="tns:CalculatorWebService" inputVariable="MultiplyIn" outputVariable="MultiplyOut"/>
+                                    <assign name="Assign10">
+                                        <copy>
+                                            <from>concat('Result: ', string($MultiplyOut.parameters/return), ' at ')</from>
+                                            <to>$BPELComputeWSDLOperationOut.response/ns0:result</to>
+                                        </copy>
+                                    </assign>
+                                </sequence>
+                                <else>
+                                    <if name="If4">
+                                        <condition>$BPELComputeWSDLOperationIn.part1/ns0:p3 = '/'</condition>
+
+                                        <sequence name="Sequence7">
+                                            <assign name="Assign11">
+                                                <copy>
+                                                    <from>$BPELComputeWSDLOperationIn.part1/ns0:p1</from>
+                                                    <to>$DivideIn.parameters/p1</to>
+                                                </copy>
+                                                <copy>
+                                                    <from>$BPELComputeWSDLOperationIn.part1/ns0:p2</from>
+                                                    <to>$DivideIn.parameters/p2</to>
+                                                </copy>
+                                            </assign>
+                                            <invoke name="Invoke5" partnerLink="PartnerLinkCalculatorWS" operation="divide" xmlns:tns="http://ws/" portType="tns:CalculatorWebService" inputVariable="DivideIn" outputVariable="DivideOut"/>
+                                            <assign name="Assign12">
+                                                <copy>
+                                                    <from>concat('Result: ', string($DivideOut.parameters/return), ' at ')</from>
+                                                    <to>$BPELComputeWSDLOperationOut.response/ns0:result</to>
+                                                </copy>
+                                            </assign>
+                                        </sequence>
+                                        <else>
+                                            <sequence name="Sequence4">
+                                                <assign name="Assign5">
+                                                    <copy>
+                                                        <from>'Error: operation not recognized'</from>
+                                                        <to>$Fault1FaultVar.fault/ns0:error</to>
+                                                    </copy>
+                                                </assign>
+                                                <reply name="Reply2" partnerLink="PartnerLinkBPEL" operation="BPELComputeWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" portType="tns:BPELComputeWSDLPortType" faultName="tns:fault1" variable="Fault1FaultVar"/>
+                                            </sequence>
+                                        </else>
+                                    </if>
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </sequence>
+            </else>
+        </if>
+        <assign name="Assign6">
+            <copy>
+                <from>
+                    <literal> &lt;ns2:getDateTime /&gt;</literal>
+                </from>
+                <to variable="GetDateTimeIn" part="parameters"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke2" partnerLink="PartnerLinkDateTimeWS" operation="getDateTime" xmlns:tns="http://datetime/" portType="tns:DateTimeWS" inputVariable="GetDateTimeIn" outputVariable="GetDateTimeOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from>concat($BPELComputeWSDLOperationOut.response/ns0:result, $GetDateTimeOut.parameters/return)</from>
+                <to>$BPELComputeWSDLOperationOut.response/ns0:result</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="PartnerLinkBPEL" operation="BPELComputeWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" portType="tns:BPELComputeWSDLPortType" variable="BPELComputeWSDLOperationOut"/>
+    </sequence>
+</process>
+
+
+

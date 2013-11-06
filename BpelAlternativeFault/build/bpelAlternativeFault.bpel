@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="bpelAlternativeFault"
+    targetNamespace="http://enterprise.netbeans.org/bpel/BpelAlternativeFault/bpelAlternativeFault"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/BpelAlternativeFault/bpelAlternativeFault"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:ns0="http://xml.netbeans.org/schema/AlternativeFaultXmlSchema">
+    <import namespace="http://enterprise.netbeans.org/bpel/BpelAlternativeFaultWSDLWrapper" location="BpelAlternativeFaultWSDLWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" location="AlternativeFaultWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLinkBpel" xmlns:tns="http://enterprise.netbeans.org/bpel/BpelAlternativeFaultWSDLWrapper" partnerLinkType="tns:AlternativeFaultWSDLLinkType" myRole="BpelAlternativeFaultWSDLRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="Fault1FaultVar" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" messageType="tns:AlternativeFaultWSDLOperationFault"/>
+        <variable name="AlternativeFaultWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" messageType="tns:AlternativeFaultWSDLOperationResponse"/>
+        <variable name="AlternativeFaultWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" messageType="tns:AlternativeFaultWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLinkBpel" operation="AlternativeFaultWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" portType="tns:AlternativeFaultWSDLPortType" variable="AlternativeFaultWSDLOperationIn"/>
+        <if name="If1">
+            <condition>$AlternativeFaultWSDLOperationIn.request/ns0:p3 = 0</condition>
+            <sequence name="Sequence1">
+                <assign name="Assign2">
+                    <copy>
+                        <from>'Error div by 0'</from>
+                        <to>$Fault1FaultVar.fault/ns0:message</to>
+                    </copy>
+                </assign>
+                <reply name="ReplyFault" partnerLink="PartnerLinkBpel" operation="AlternativeFaultWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" portType="tns:AlternativeFaultWSDLPortType" faultName="tns:fault1" variable="Fault1FaultVar"/>
+            </sequence>
+            <else>
+                <sequence name="Sequence2">
+                    <assign name="Assign1">
+                        <copy>
+                            <from>($AlternativeFaultWSDLOperationIn.request/ns0:p1 + $AlternativeFaultWSDLOperationIn.request/ns0:p2) div $AlternativeFaultWSDLOperationIn.request/ns0:p3</from>
+                                <to>$AlternativeFaultWSDLOperationOut.response/ns0:result</to>
+                        </copy>
+                    </assign>
+                    <reply name="Reply1" partnerLink="PartnerLinkBpel" operation="AlternativeFaultWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" portType="tns:AlternativeFaultWSDLPortType" variable="AlternativeFaultWSDLOperationOut"/>
+                </sequence>
+            </else>
+        </if>
+    </sequence>
+</process>
+

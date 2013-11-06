@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xml.netbeans.org/schema/AlternativeFaultXmlSchema"
+    xmlns:tns="http://xml.netbeans.org/schema/AlternativeFaultXmlSchema"
+    elementFormDefault="qualified">
+    <xsd:element name="params" type="tns:paramsType"/>
+    <xsd:element name="resp" type="tns:respType"/>
+    <xsd:element name="fault" type="tns:faultType"/>
+    <xsd:complexType name="paramsType">
+        <xsd:sequence>
+            <xsd:element name="p1" type="xsd:int"/>
+            <xsd:element name="p2" type="xsd:int"/>
+            <xsd:element name="p3" type="xsd:int"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="respType">
+        <xsd:sequence>
+            <xsd:element name="result" type="xsd:float"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="faultType">
+        <xsd:sequence>
+            <xsd:element name="message" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+
+

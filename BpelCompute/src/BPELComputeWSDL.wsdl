@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="BPELComputeWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL" xmlns:ns="http://xml.netbeans.org/schema/BPELComputeXmlSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL">
+            <xsd:import namespace="http://xml.netbeans.org/schema/BPELComputeXmlSchema" schemaLocation="BPELComputeXmlSchema.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="BPELComputeWSDLOperationRequest">
+        <part name="request" type="ns:computeRequest"/>
+    </message>
+    <message name="BPELComputeWSDLOperationResponse">
+        <part name="response" type="ns:computeResponse"/>
+    </message>
+    <message name="BPELComputeWSDLOperationFault">
+        <part name="fault" type="ns:computeFault"/>
+    </message>
+    <portType name="BPELComputeWSDLPortType">
+        <operation name="BPELComputeWSDLOperation">
+            <input name="input1" message="tns:BPELComputeWSDLOperationRequest"/>
+            <output name="output1" message="tns:BPELComputeWSDLOperationResponse"/>
+            <fault name="fault1" message="tns:BPELComputeWSDLOperationFault"/>
+        </operation>
+    </portType>
+    <binding name="BPELComputeWSDLBinding" type="tns:BPELComputeWSDLPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="BPELComputeWSDLOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL"/>
+            </output>
+            <fault name="fault1">
+                <soap:fault name="fault1" use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelCompute/BPELComputeWSDL"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="BPELComputeWSDLService">
+        <port name="BPELComputeWSDLPort" binding="tns:BPELComputeWSDLBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/BPELComputeWSDLService/BPELComputeWSDLPort"/>
+        </port>
+    </service>
+</definitions>
+

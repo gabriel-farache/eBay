@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <nextCatalog catalog="nbproject/private/cache/retriever/catalog.xml"/>
+    <system systemId="WebApplicationWS/wsdl/CalculatorWebServiceService.wsdl" uri="nb-uri:WebApplicationWS#src/conf/wsdl/CalculatorWebServiceService.wsdl"/>
+    <system systemId="WebApplicationWS1/wsdl/DateTimeWSService.wsdl" uri="nb-uri:WebApplicationWS1#src/conf/wsdl/DateTimeWSService.wsdl"/>
+</catalog>
+
+
+

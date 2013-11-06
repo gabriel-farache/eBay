@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="AlternativeFaultWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" xmlns:ns="http://xml.netbeans.org/schema/AlternativeFaultXmlSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL">
+            <xsd:import namespace="http://xml.netbeans.org/schema/AlternativeFaultXmlSchema" schemaLocation="AlternativeFaultXmlSchema.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="AlternativeFaultWSDLOperationRequest">
+        <part name="request" type="ns:paramsType"/>
+    </message>
+    <message name="AlternativeFaultWSDLOperationResponse">
+        <part name="response" type="ns:respType"/>
+    </message>
+    <message name="AlternativeFaultWSDLOperationFault">
+        <part name="fault" type="ns:faultType"/>
+    </message>
+    <portType name="AlternativeFaultWSDLPortType">
+        <operation name="AlternativeFaultWSDLOperation">
+            <input name="input1" message="tns:AlternativeFaultWSDLOperationRequest"/>
+            <output name="output1" message="tns:AlternativeFaultWSDLOperationResponse"/>
+            <fault name="fault1" message="tns:AlternativeFaultWSDLOperationFault"/>
+        </operation>
+    </portType>
+    <binding name="AlternativeFaultWSDLBinding" type="tns:AlternativeFaultWSDLPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="AlternativeFaultWSDLOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL"/>
+            </output>
+            <fault name="fault1">
+                <soap:fault name="fault1" use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="AlternativeFaultWSDLService">
+        <port name="AlternativeFaultWSDLPort" binding="tns:AlternativeFaultWSDLBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/AlternativeFaultWSDLService/AlternativeFaultWSDLPort"/>
+        </port>
+    </service>
+</definitions>
+

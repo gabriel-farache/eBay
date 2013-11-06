@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/BpelAlternativeFault/bpelAlternativeFault" xmlns:ns1="http://j2ee.netbeans.org/wsdl/BpelAlternativeFault/AlternativeFaultWSDL" xmlns:ns2="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="BpelAlternativeFaultWSDLRole_myRole" interface-name="ns1:AlternativeFaultWSDLPortType" service-name="ns0:PartnerLinkBpel">
+            <ns2:display-name>PartnerLinkBpel</ns2:display-name>
+            <ns2:process-name>bpelAlternativeFault</ns2:process-name>
+            <ns2:file-path>bpelAlternativeFault.bpel</ns2:file-path>
+        </provides>
+    </services>
+</jbi>
