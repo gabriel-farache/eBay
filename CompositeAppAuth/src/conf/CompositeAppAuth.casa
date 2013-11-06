@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<casa xmlns="http://java.sun.com/xml/ns/casa" xmlns:ns1="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL" xmlns:ns2="http://el/" xmlns:ns3="CompositeAppAuth" xmlns:ns4="http://enterprise.netbeans.org/bpel/BpelAuthentification/bpelAuthentification" xmlns:xlink="http://www.w3.org/2000/xlink">
+    <endpoints>
+        <endpoint endpoint-name="AuthentificateWSDLPort" interface-name="ns1:AuthentificateWSDLPortType" name="endpoint1" service-name="ns1:AuthentificateWSDLService"/>
+        <endpoint endpoint-name="AuthentificateWebServicePort" interface-name="ns2:AuthentificateWebService" name="endpoint2" service-name="ns2:AuthentificateWebServiceService"/>
+        <endpoint endpoint-name="casaPort1" interface-name="ns1:AuthentificateWSDLPortType" name="endpoint3" service-name="ns3:CompositeAppAuthService1"/>
+        <endpoint display-name="PartnerLinkBPEL" endpoint-name="AuthentificateWSDLRole_myRole" file-path="bpelAuthentification.bpel" interface-name="ns1:AuthentificateWSDLPortType" name="endpoint4" process-name="bpelAuthentification" service-name="ns4:PartnerLinkBPEL"/>
+        <endpoint display-name="PartnerLinkAuthntificateWS" endpoint-name="AuthentificateWebServiceRole_partnerRole" file-path="bpelAuthentification.bpel" interface-name="ns2:AuthentificateWebService" name="endpoint5" process-name="bpelAuthentification" service-name="ns4:PartnerLinkAuthntificateWS"/>
+    </endpoints>
+    <service-units>
+        <service-engine-service-unit artifacts-zip="BpelAuthentification.jar" component-name="sun-bpel-engine" defined="true" description="Represents this Service Unit" internal="true" name="CompositeAppAuth-BpelAuthentification" unit-name="BpelAuthentification" unknown="false" x="115" y="97">
+            <provides endpoint="endpoint4"/>
+            <consumes endpoint="endpoint5"/>
+        </service-engine-service-unit>
+        <binding-component-service-unit artifacts-zip="sun-http-binding.jar" component-name="sun-http-binding" description="Represents this Service Unit" name="CompositeAppAuth-sun-http-binding" unit-name="sun-http-binding">
+            <ports>
+                <port x="67" y="280">
+                    <link xlink:href="../jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/service[@name='AuthentificateWebServiceService']/port[@name='AuthentificateWebServicePort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint2"/>
+                    <provides endpoint="endpoint2"/>
+                </port>
+                <port bindingType="soap" x="67" y="112">
+                    <link xlink:href="../jbiasa/CompositeAppAuth.wsdl#xpointer(/definitions/service[@name='CompositeAppAuthService1']/port[@name='casaPort1'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint3"/>
+                    <provides endpoint="endpoint3"/>
+                </port>
+                <port state="deleted" x="67" y="117">
+                    <link xlink:href="../jbiServiceUnits/BpelAuthentification/AuthentificateWSDL.wsdl#xpointer(/definitions/service[@name='AuthentificateWSDLService']/port[@name='AuthentificateWSDLPort'])" xlink:type="simple"/>
+                    <consumes endpoint="endpoint1"/>
+                    <provides endpoint="endpoint1"/>
+                </port>
+            </ports>
+        </binding-component-service-unit>
+    </service-units>
+    <connections>
+        <connection consumer="endpoint3" provider="endpoint4" state="new"/>
+        <connection consumer="endpoint5" provider="endpoint2" state="unchanged"/>
+        <connection consumer="endpoint1" provider="endpoint4" state="deleted"/>
+    </connections>
+    <porttypes>
+        <link xlink:href="../jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/portType[@name='AuthentificateWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/CompositeAppAuth.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/portType[@name='AuthentificateWebService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BpelAuthentification/AuthentificateWSDL.wsdl#xpointer(/definitions/portType[@name='AuthentificateWSDLPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/CompositeAppAuth.wsdl#xpointer(/definitions/portType[@name='dummyCasaPortType'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/BpelAuthentification/src/_references/_projects/eBayAuthenticate/src/conf/wsdl/AuthentificateWebServiceService.wsdl#xpointer(/definitions/portType[@name='AuthentificateWebService'])" xlink:type="simple"/>
+    </porttypes>
+    <bindings>
+        <link xlink:href="../jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/binding[@name='AuthentificateWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/CompositeAppAuth.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/binding[@name='AuthentificateWebServicePortBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BpelAuthentification/AuthentificateWSDL.wsdl#xpointer(/definitions/binding[@name='AuthentificateWSDLBinding'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/CompositeAppAuth.wsdl#xpointer(/definitions/binding[@name='casaBinding1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/BpelAuthentification/src/_references/_projects/eBayAuthenticate/src/conf/wsdl/AuthentificateWebServiceService.wsdl#xpointer(/definitions/binding[@name='AuthentificateWebServicePortBinding'])" xlink:type="simple"/>
+    </bindings>
+    <services>
+        <link xlink:href="../jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/service[@name='AuthentificateWebServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiasa/CompositeAppAuth.wsdl#xpointer(/definitions/service[@name='CompositeAppAuthService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl#xpointer(/definitions/service[@name='AuthentificateWebServiceService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/BpelAuthentification/AuthentificateWSDL.wsdl#xpointer(/definitions/service[@name='AuthentificateWSDLService'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/CompositeAppAuth.wsdl#xpointer(/definitions/service[@name='CompositeAppAuthService1'])" xlink:type="simple"/>
+        <link xlink:href="../jbiServiceUnits/META-INF/BpelAuthentification/src/_references/_projects/eBayAuthenticate/src/conf/wsdl/AuthentificateWebServiceService.wsdl#xpointer(/definitions/service[@name='AuthentificateWebServiceService'])" xlink:type="simple"/>
+    </services>
+    <regions>
+        <region name="WSDL Endpoints" width="150"/>
+        <region name="JBI Modules" width="500"/>
+        <region name="External Modules" width="200"/>
+    </regions>
+</casa>

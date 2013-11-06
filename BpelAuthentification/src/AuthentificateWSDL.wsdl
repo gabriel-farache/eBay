@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="AuthentificateWSDL" targetNamespace="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL" xmlns:ns="http://xml.netbeans.org/schema/AuthentificationXmlSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+        <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL">
+            <xsd:import namespace="http://xml.netbeans.org/schema/AuthentificationXmlSchema" schemaLocation="AuthentificationXmlSchema.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="AuthentificateWSDLOperationRequest">
+        <part name="request" type="ns:AuthReqType"/>
+    </message>
+    <message name="AuthentificateWSDLOperationResponse">
+        <part name="response" type="ns:AuthRespType"/>
+    </message>
+    <portType name="AuthentificateWSDLPortType">
+        <operation name="AuthentificateWSDLOperation">
+            <input name="input1" message="tns:AuthentificateWSDLOperationRequest"/>
+            <output name="output1" message="tns:AuthentificateWSDLOperationResponse"/>
+        </operation>
+    </portType>
+    <binding name="AuthentificateWSDLBinding" type="tns:AuthentificateWSDLPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="AuthentificateWSDLOperation">
+            <soap:operation/>
+            <input name="input1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL"/>
+            </input>
+            <output name="output1">
+                <soap:body use="literal" namespace="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="AuthentificateWSDLService">
+        <port name="AuthentificateWSDLPort" binding="tns:AuthentificateWSDLBinding">
+            <soap:address location="http://localhost:${HttpDefaultPort}/AuthentificateWSDLService/AuthentificateWSDLPort"/>
+        </port>
+    </service>
+</definitions>
