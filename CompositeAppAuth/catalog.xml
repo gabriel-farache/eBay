@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system"><nextCatalog catalog="src/jbiServiceUnits/META-INF/BpelAuthentification/catalog.xml"/>
+    <system systemId="http://localhost:8080/AuthenticateWS/AuthentificateWebServiceService?wsdl" uri="src/jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.wsdl"/>
+    <system systemId="http://localhost:8080/AuthenticateWS/AuthentificateWebServiceService?xsd=1" uri="src/jbiasa/localhost_8080/AuthenticateWS/AuthentificateWebServiceService.xsd_1.xsd"/>
+</catalog>

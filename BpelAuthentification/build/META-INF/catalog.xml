@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="AuthenticateWS/wsdl/AuthentificateWebServiceService.wsdl" uri="src/_references/_projects/eBayAuthenticate/src/conf/wsdl/AuthentificateWebServiceService.wsdl"/>
+    <system systemId="AuthentificateWebServiceService_schema1.xsd" uri="src/_references/_projects/eBayAuthenticate/src/conf/wsdl/AuthentificateWebServiceService_schema1.xsd"/>
+</catalog>
