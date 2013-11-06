@@ -20,13 +20,14 @@ import javax.jws.WebService;
 @WebService()
 public class writeDBWS {
 
+    private int m_id = 0;
+
     /**
      * Web service operation
      */
     @WebMethod(operationName = "operation")
     public boolean operation(@WebParam(name = "filename")
-    String filename, @WebParam(name = "id")
-    String id, @WebParam(name = "data")
+    String filename, @WebParam(name = "data")
     String data, @WebParam(name = "append")
     boolean append) {
         //TODO write your implementation code here:
@@ -43,7 +44,8 @@ public class writeDBWS {
 
                 FileWriter fw = new FileWriter(file.getAbsoluteFile(),append);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(id+"|"+data+"\n");
+                bw.write(m_id+"|"+data+"\n");
+                m_id++;
                 bw.close();
         } catch (IOException e) {
                 e.printStackTrace();
