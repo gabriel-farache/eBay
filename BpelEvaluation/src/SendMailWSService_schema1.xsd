@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://mail/" xmlns:tns="http://mail/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="sendMail" type="tns:sendMail"/>
+
+  <xs:element name="sendMailResponse" type="tns:sendMailResponse"/>
+
+  <xs:complexType name="sendMail">
+    <xs:sequence>
+      <xs:element name="subject" type="xs:string" minOccurs="0"/>
+      <xs:element name="content" type="xs:string" minOccurs="0"/>
+      <xs:element name="recipients" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sendMailResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
