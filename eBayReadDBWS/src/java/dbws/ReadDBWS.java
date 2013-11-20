@@ -6,10 +6,8 @@
 package dbws;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -44,7 +42,7 @@ public class ReadDBWS {
                     if(str.split("|")[0].equals(id)) {
                         find = true;
                     }
-                } while(!find && str!= null);
+                } while(str.isEmpty());
                 br.close();
         } catch (IOException e) {
                 e.printStackTrace();
