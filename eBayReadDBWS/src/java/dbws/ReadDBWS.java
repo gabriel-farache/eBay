@@ -43,6 +43,7 @@ public class ReadDBWS {
                         find = true;
                     }
                 }   while(str.isEmpty());
+                
                 br.close();
         } catch (IOException e) {
                 e.printStackTrace();
