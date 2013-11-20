@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="CompositeAppAuth" xmlns:ns2="http://enterprise.netbeans.org/bpel/BpelAuthentification/bpelAuthentification" xmlns:ns3="http://el/" xmlns:ns4="http://j2ee.netbeans.org/wsdl/BpelAuthentification/AuthentificateWSDL" version="1.0">
+    <services binding-component="true">
+        <provides endpoint-name="AuthentificateWebServicePort" interface-name="ns3:AuthentificateWebService" service-name="ns3:AuthentificateWebServiceService"/>
+        <consumes endpoint-name="casaPort1" interface-name="ns4:AuthentificateWSDLPortType" service-name="ns1:CompositeAppAuthService1"/>
+    </services>
+</jbi>

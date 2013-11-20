@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://dbws/" xmlns:tns="http://dbws/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="operation" nillable="true" type="tns:operation"/>
+
+  <xs:element name="operationResponse" nillable="true" type="tns:operationResponse"/>
+
+  <xs:complexType name="operation">
+    <xs:sequence>
+      <xs:element name="append" type="xs:boolean"/>
+      <xs:element name="data" type="xs:string" minOccurs="0"/>
+      <xs:element name="filename" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="operationResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SendMailWSServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/SendMailWSServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/SendMailWSServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://mail/">
+    <import location="SendMailWSService.wsdl" namespace="http://mail/"/>
+    <plnk:partnerLinkType name="SendMailWSLinkType">
+        <plnk:role name="SendMailWSRole" portType="ns:SendMailWS"/>
+    </plnk:partnerLinkType>
+</definitions>
+
