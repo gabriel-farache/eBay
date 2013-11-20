@@ -42,7 +42,7 @@ public class ReadDBWS {
                     if(str.split("|")[0].equals(id)) {
                         find = true;
                     }
-                } while(str.isEmpty());
+                }  while(str.isEmpty());
                 br.close();
         } catch (IOException e) {
                 e.printStackTrace();
