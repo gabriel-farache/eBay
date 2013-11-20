@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReadDBWSServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/ReadDBWSServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/ReadDBWSServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://dbws/">
+    <import location="eBayReadDBWS/wsdl/ReadDBWSService.wsdl" namespace="http://dbws/"/>
+    <plnk:partnerLinkType name="ReadDBWSLinkType">
+        <plnk:role name="ReadMontantActuelRole" portType="ns:ReadDBWS"/>
+    </plnk:partnerLinkType>
+</definitions>
+

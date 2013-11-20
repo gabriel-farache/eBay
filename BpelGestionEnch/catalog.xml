@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <nextCatalog catalog="nbproject/private/cache/retriever/catalog.xml"/>
+    <system systemId="writeDBWS/wsdl/writeDBWSService.wsdl" uri="nb-uri:writeDBWS#src/conf/wsdl/writeDBWSService.wsdl"/>
+    <system systemId="eBayReadDBWS/wsdl/ReadDBWSService.wsdl" uri="nb-uri:eBayReadDBWS#src/conf/wsdl/ReadDBWSService.wsdl"/>
+    <system systemId="eBayMailWS/wsdl/SendMailWSService.wsdl" uri="nb-uri:eBayMailWS#src/conf/wsdl/SendMailWSService.wsdl"/>
 </catalog>
+
+
+
+
+

@@ -8,8 +8,111 @@
     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
-
-   <sequence>
-   </sequence>
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxed2="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" xmlns:sxxf="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/XPathFunctions">
+    <import namespace="http://enterprise.netbeans.org/bpel/ReadDBWSServiceWrapper" location="ReadDBWSServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://dbws/" location="eBayReadDBWS/wsdl/ReadDBWSService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" location="updateEnchereWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/writeDBWSServiceWrapper" location="writeDBWSServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://dbws/" location="writeDBWS/wsdl/writeDBWSService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/ReadDBWSServiceWrapper1" location="ReadDBWSServiceWrapper1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <import namespace="http://enterprise.netbeans.org/bpel/SendMailWSServiceWrapper" location="SendMailWSServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <import namespace="http://mail/" location="eBayMailWS/wsdl/SendMailWSService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+   <partnerLinks>
+        <partnerLink name="PartnerLink3" xmlns:tns="http://enterprise.netbeans.org/bpel/ReadDBWSServiceWrapper1" partnerLinkType="tns:ReadDBWSLinkType1" partnerRole="ReadDBWSRole"/>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://enterprise.netbeans.org/bpel/writeDBWSServiceWrapper" partnerLinkType="tns:writeDBWSLinkType" partnerRole="writeDBWSRole"/>
+       <partnerLink name="PartnerLink4" xmlns:tns="http://enterprise.netbeans.org/bpel/SendMailWSServiceWrapper" partnerLinkType="tns:SendMailWSLinkType" partnerRole="SendMailWSRole"/>
+       <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" partnerLinkType="tns:updateEnchereWSDL" myRole="updateEnchereWSDLPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+       <variable name="SendMailOut" xmlns:tns="http://mail/" messageType="tns:sendMailResponse"/>
+       <variable name="SendMailIn" xmlns:tns="http://mail/" messageType="tns:sendMail"/>
+       <variable name="UpdateEnchereWSDLOperationOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" messageType="tns:updateEnchereWSDLOperationResponse"/>
+       <variable name="Vendeur" type="xs:int"/>
+       <variable name="Ancien-enchereur" type="xs:int"/>
+       <variable name="Date" type="xs:dateTime"/>
+       <variable name="AncienPrix" type="xs:int"/>
+       <variable name="OperationOut" xmlns:tns="http://dbws/" messageType="tns:operationResponse"/>
+        <variable name="OperationIn" xmlns:tns="http://dbws/" messageType="tns:operation"/>
+        <variable name="ReadWSOut" xmlns:tns="http://dbws/" messageType="tns:readWSResponse"/>
+        <variable name="ReadWSIn" xmlns:tns="http://dbws/" messageType="tns:readWS"/>
+        <variable name="UpdateEnchereWSDLOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" messageType="tns:updateEnchereWSDLOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="updateEnchereWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" portType="tns:updateEnchereWSDLPortType" variable="UpdateEnchereWSDLOperationIn"/>
+        <assign name="Assign1">
+            <copy>
+               <from>'encheres'</from>
+               <to>$ReadWSIn.parameters/filename</to>
+            </copy>
+           <copy>
+              <from variable="UpdateEnchereWSDLOperationIn" part="mec-id"/>
+              <to variable="Ancien-enchereur"/>
+           </copy>
+           <copy>
+              <from variable="UpdateEnchereWSDLOperationIn" part="enchere-id"/>
+              <to>$ReadWSIn.parameters/id</to>
+           </copy>
+        </assign>
+        <invoke name="Invoke3" partnerLink="PartnerLink3" operation="readWS" xmlns:tns="http://dbws/" portType="tns:ReadDBWS" inputVariable="ReadWSIn" outputVariable="ReadWSOut"/>
+        <assign name="Assign5">
+           <copy>
+              <from>substring-before(substring-after($ReadWSOut.parameters/return, '|'), ';')</from>
+              <to variable="AncienPrix"/>
+           </copy>
+           <copy>
+              <from>substring-before(substring-after(substring-after(substring-after($ReadWSOut.parameters/return, '|'), ';'), ';'), ';')</from>
+              <to variable="Date"/>
+           </copy>
+           <copy>
+              <from>false()</from>
+              <to variable="UpdateEnchereWSDLOperationOut" part="part1"/>
+           </copy>
+        </assign>
+       <if name="If1">
+          <condition>sxxf:dateTime-less-than(sxxf:current-dateTime(), $Date) and $UpdateEnchereWSDLOperationIn.nouveau-montant &gt; $AncienPrix</condition>
+          <sequence name="Sequence1">
+             <assign name="Assign7">
+                <copy>
+                   <from>'encheres'</from>
+                   <to>$OperationIn.parameters/filename</to>
+                </copy>
+                <copy>
+                   <from>concat($UpdateEnchereWSDLOperationIn.enchere-id, '|', $UpdateEnchereWSDLOperationIn.nouveau-montant, ';', $UpdateEnchereWSDLOperationIn.mec-id, ';', $Date, ';', $Vendeur)</from>
+                   <to>$OperationIn.parameters/data</to>
+                </copy>
+                <copy>
+                   <from>true()</from>
+                   <to>$OperationIn.parameters/append</to>
+                </copy>
+             </assign>
+             <invoke name="Invoke2" partnerLink="PartnerLink2" operation="operation" xmlns:tns="http://dbws/" portType="tns:writeDBWS" inputVariable="OperationIn" outputVariable="OperationOut"/>
+             <assign name="Assign6">
+                <copy>
+                   <from>$OperationOut.parameters/return</from>
+                   <to variable="UpdateEnchereWSDLOperationOut" part="part1"/>
+                </copy>
+                <copy>
+                   <from>'Nouvelle enchere'</from>
+                   <to>$SendMailIn.parameters/subject</to>
+                </copy>
+                <copy>
+                   <from>concat('Votre enchere de ', $AncienPrix, ' sur lóbjet ', $UpdateEnchereWSDLOperationIn.enchere-id, ' a ete depasse par ', $UpdateEnchereWSDLOperationIn.mec-id, ' avec un montant de ', $UpdateEnchereWSDLOperationIn.nouveau-montant)</from>
+                   <to>$SendMailIn.parameters/content</to>
+                </copy>
+                <copy>
+                   <from variable="Ancien-enchereur"/>
+                   <to>$SendMailIn.parameters/recipients</to>
+                </copy>
+             </assign>
+             <invoke name="Invoke4" partnerLink="PartnerLink4" operation="sendMail" xmlns:tns="http://mail/" portType="tns:SendMailWS" inputVariable="SendMailIn" outputVariable="SendMailOut"/>
+          </sequence>
+        </if>
+       <reply name="Reply1" partnerLink="PartnerLink1" operation="updateEnchereWSDLOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelGestionEnch/updateEnchereWSDL" portType="tns:updateEnchereWSDLPortType" variable="UpdateEnchereWSDLOperationOut"/>
+    </sequence>
 </process>
+
+
+
+
+
+
