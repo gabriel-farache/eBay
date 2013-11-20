@@ -42,7 +42,7 @@ public class writeDBWS {
                         file.createNewFile();
                 }
 
-                FileWriter fw = new FileWriter(file.getAbsoluteFile(),append);
+                FileWriter fw = new FileWriter (file.getAbsoluteFile(),append);
                 BufferedWriter bw = new BufferedWriter(fw);
                 bw.write(m_id+"|"+data+"\n");
                 m_id++;
